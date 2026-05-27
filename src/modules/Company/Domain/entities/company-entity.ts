@@ -25,7 +25,7 @@ export class CompanyEntity{
 
   get id(): string {return this.props.id.value}
   get name(): string {return this.props.name.value}
-  get country(): string {return this.props.country.country}
+  get country(): string {return this.props.country.value}
   get document(): string | null {return this.props.document?.raw ?? null}
   get isInformal(): boolean{return this.props.isInformal}
   get cratedAt(): Date{return this.props.createdAt}

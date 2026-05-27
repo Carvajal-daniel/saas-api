@@ -1,4 +1,5 @@
-import type { CompanyId } from "../../../company/Domain/values-objects/company-id.js";
+
+import type { CompanyId } from "../../../Company/Domain/values-objects/company-id.js";
 import type { UserId } from "../../../User/Domain/values-objects/user-id.js";
 import type { MembershipId } from "../values-objects/membership-id.js";
 import type { MembershipRole } from "../values-objects/membership-role.js";

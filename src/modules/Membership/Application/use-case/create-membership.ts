@@ -7,19 +7,24 @@ import { MembershipRole } from "../../Domain/values-objects/membership-role.js";
 import type { MembershipRepositoryDB } from "../../Infrastructure/database/repositories/membership-repository.js";
 import type { CreateMembershipInputDTOtype } from "./membership-dto.js";
 
-export class CreateMembership{
+export class CreateMembershipUseCase{
   constructor(
     private readonly repo: MembershipRepositoryDB
   ){}
 
-  async excecute(data: CreateMembershipInputDTOtype, tx?: any ): Promise<MembershipEntity>{
+  async execute(data: CreateMembershipInputDTOtype, tx?: any ): Promise<MembershipEntity>{
     const id = MembershipId.create()
     const userId = UserId.create(data.userId)
     const companyId = CompanyId.create(data.companyId)
     const role = MembershipRole.create(data.role)
     const now = new Date()
 
-    const membershiptExists = await this.repo.findByUserAndCompany(userId, companyId)
+   const membershiptExists =
+  await this.repo.findByUserAndCompany(
+    userId,
+    companyId,
+    tx
+  )
     if(membershiptExists){
       throw new Error("membership already exists")
     }

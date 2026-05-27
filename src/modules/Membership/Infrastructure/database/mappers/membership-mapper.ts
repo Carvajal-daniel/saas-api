@@ -1,4 +1,5 @@
-import { CompanyId } from "../../../../company/Domain/values-objects/company-id.js";
+
+import { CompanyId } from "../../../../Company/Domain/values-objects/company-id.js";
 import { UserId } from "../../../../User/Domain/values-objects/user-id.js";
 import { MembershipEntity } from "../../../Domain/entities/membership-entity.js";
 import { MembershipId } from "../../../Domain/values-objects/membership-id.js";

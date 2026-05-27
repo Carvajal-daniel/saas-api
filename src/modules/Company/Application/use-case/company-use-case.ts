@@ -22,11 +22,11 @@ export class CreateCompanyUseCase{
             throw new Error("Document is requeired")
         }
 
-        if( country.country === "BR"){
+        if( country.value === "BR"){
           document = CNPJ.create(data.document)
         }
 
-        if( country.country === "VE"){
+        if( country.value === "VE"){
           document = RIF.create(data.document)
         }
     } 

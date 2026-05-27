@@ -1,11 +1,11 @@
 import { and, eq } from "drizzle-orm";
 import { db } from "../../../../../shared/database/database.js"
-import type { CompanyId } from "../../../../company/Domain/values-objects/company-id.js";
 import type { UserId } from "../../../../User/Domain/values-objects/user-id.js";
 import { MembershipEntity } from "../../../Domain/entities/membership-entity.js"
 import type { MembershipReposirory } from "../../../Domain/repositories/membership-interface.js";
 import { membershipTable } from "../schema/membership-schema.js"
 import { MembershipMappers } from "../mappers/membership-mapper.js";
+import type { CompanyId } from "../../../../Company/Domain/values-objects/company-id.js";
 
 export class MembershipRepositoryDB implements MembershipReposirory{
 
@@ -14,26 +14,33 @@ export class MembershipRepositoryDB implements MembershipReposirory{
 
     await client
     .insert(membershipTable)
-    .values(membership, tx)
+    .values(MembershipMappers.toPersistence(membership))
   }
 
-  async findByUserAndCompany( userId: UserId, companyId: CompanyId): Promise<MembershipEntity | null>
-     {
-       const [result] = await db 
-      .select()
-      .from(membershipTable)
-      .where(
-        and(
-          eq(membershipTable.userId, userId.value),
-          eq(membershipTable.companyId, companyId.value)
-        )
+  async findByUserAndCompany(
+  userId: UserId,
+  companyId: CompanyId,
+  tx?: any
+): Promise<MembershipEntity | null> {
+
+  const client = tx ? tx : db
+
+  const [result] = await client
+    .select()
+    .from(membershipTable)
+    .where(
+      and(
+        eq(membershipTable.userId, userId.value),
+        eq(membershipTable.companyId, companyId.value)
       )
-      .limit(1)
+    )
+    .limit(1)
 
-      if(!result){
-        throw new Error("Comapny not found")
-      }
-
-    return MembershipMappers.toDomain(result)
+  if (!result) {
+    return null
   }
+
+  return MembershipMappers.toDomain(result)
+
+}
 }

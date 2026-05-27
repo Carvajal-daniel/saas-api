@@ -3,15 +3,19 @@ export class RIF {
     private readonly value: string
   ) {}
 
-  static create(value: string): RIF {
-    const clean = value.toUpperCase()
+ static create(value: string): RIF {
 
-    if (!/^[JGVE]\d{9}$/.test(clean)) {
-      throw new Error("Invalid RIF")
-    }
+  const clean = value
+    .toUpperCase()
+    .replace(/-/g, "")
 
-    return new RIF(clean)
+  if (!/^[JGVE]\d{9}$/.test(clean)) {
+    throw new Error("Invalid RIF")
   }
+
+  return new RIF(clean)
+
+}
 
   get raw(): string {
     return this.value
