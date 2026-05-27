@@ -3,7 +3,7 @@ import { UserId } from "../../../../User/Domain/values-objects/user-id.js";
 import { MembershipEntity } from "../../../Domain/entities/membership-entity.js";
 import { MembershipId } from "../../../Domain/values-objects/membership-id.js";
 import { MembershipRole } from "../../../Domain/values-objects/membership-role.js";
-import type { membershipTable } from "../../schema/membership-schema.js";
+import type { membershipTable } from "../schema/membership-schema.js";
 
 export class MembershipMappers{
   static toPersistence(membership: MembershipEntity){

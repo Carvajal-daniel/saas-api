@@ -4,7 +4,7 @@ import type { CompanyId } from "../../../../company/Domain/values-objects/compan
 import type { UserId } from "../../../../User/Domain/values-objects/user-id.js";
 import { MembershipEntity } from "../../../Domain/entities/membership-entity.js"
 import type { MembershipReposirory } from "../../../Domain/repositories/membership-interface.js";
-import { membershipTable } from "../../schema/membership-schema.js"
+import { membershipTable } from "../schema/membership-schema.js"
 import { MembershipMappers } from "../mappers/membership-mapper.js";
 
 export class MembershipRepositoryDB implements MembershipReposirory{
