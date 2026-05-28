@@ -1,3 +1,4 @@
+import { InvalidCompanyNameError } from "../../Erros/invalid-company-name.js"
 
 
 export class CompanyName{
@@ -12,7 +13,7 @@ export class CompanyName{
   static create(name: string): CompanyName{
 
     if( name.length < 2 ){
-     throw new Error("Nome is must ")
+     throw new InvalidCompanyNameError()
     }
 
     return new CompanyName(name)

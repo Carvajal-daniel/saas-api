@@ -1,3 +1,5 @@
+import { InvalidCnpj } from "../../../Erros/invalid-cnpj.js"
+
 export class CNPJ {
   private constructor(
     private readonly value: string
@@ -7,7 +9,7 @@ export class CNPJ {
     const clean = value.replace(/\D/g, "")
 
     if (clean.length !== 14) {
-      throw new Error("Invalid CNPJ")
+      throw new InvalidCnpj()
     }
 
     return new CNPJ(clean)

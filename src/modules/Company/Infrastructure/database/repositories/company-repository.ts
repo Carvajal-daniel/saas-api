@@ -4,6 +4,7 @@ import { CompanyEntity } from "../../../Domain/entities/company-entity.js";
 import type { CompanyRepository } from "../../../Domain/repository/company-repository.js";
 import { CompanyMapper } from "../mappers/company-mapper.js";
 import { CompanyTable } from "../schema/company-schema.js";
+import type { CNPJ, RIF } from "../../../Domain/values-objects/index.js";
 
 export class CompanyRepositoryDB implements CompanyRepository{
   
@@ -15,13 +16,13 @@ export class CompanyRepositoryDB implements CompanyRepository{
     .values(CompanyMapper.toPersistence(company)) 
   }
 
-  async findByRif(rif: string, tx?: any): Promise<CompanyEntity | null> {
+  async findByRif(rif: RIF, tx?: any): Promise<CompanyEntity | null> {
 
      const document = tx ? tx : db;
       const [result] = await document
       .select()
       .from(CompanyTable)
-      .where(eq(CompanyTable.rif, rif))
+      .where(eq(CompanyTable.rif, rif.raw))
       .limit(1)
 
       if(!result){
@@ -31,12 +32,12 @@ export class CompanyRepositoryDB implements CompanyRepository{
       return CompanyMapper.toDomain(result) 
   }
 
-  async findByCnpj(cnpj: string, tx?: any): Promise<CompanyEntity | null> {
+  async findByCnpj(cnpj: CNPJ, tx?: any): Promise<CompanyEntity | null> {
      const document = tx ? tx : db;
     const [result] = await document
     .select()
     .from(CompanyTable)
-    .where(eq(CompanyTable.cnpj, cnpj))
+    .where(eq(CompanyTable.cnpj, cnpj.raw))
     .limit(1)
     
     if(!result){

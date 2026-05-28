@@ -1,7 +1,8 @@
 import type { CompanyEntity } from "../entities/company-entity.js";
+import type { CNPJ, RIF } from "../values-objects/index.js";
 
 export interface CompanyRepository{
   save(company: CompanyEntity, tx?: any): Promise<void>
-  findByRif(rif: string, tx?: any): Promise<CompanyEntity | null>
-  findByCnpj(cnpj: string, tx?: any): Promise<CompanyEntity | null>
+  findByRif(rif: RIF, tx?: any): Promise<CompanyEntity | null>
+  findByCnpj(cnpj: CNPJ, tx?: any): Promise<CompanyEntity | null>
 }

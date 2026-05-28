@@ -2,6 +2,9 @@
 import { CompanyEntity } from "../../Domain/entities/company-entity.js";
 import type { CompanyRepository } from "../../Domain/repository/company-repository.js";
 import { CNPJ, CompanyCountry, CompanyId, CompanyName, RIF } from "../../Domain/values-objects/index.js";
+import { CnpjAlreadyExist } from "../../Erros/cnpj-already-exists.js";
+import { DocumentIdRequeired } from "../../Erros/document-is-requeired.js";
+import { RifAlreadyExist } from "../../Erros/rif-already-exist.js";
 import type { CreateCompanyInputDTOtype, CreateCompanyReponseDTOtype } from "./company-dto.js";
 
 
@@ -20,26 +23,29 @@ export class CreateCompanyUseCase{
     if(!data.isInformal){
       
         if(!data.document){
-            throw new Error("Document is requeired")
+            throw new DocumentIdRequeired()
         }
 
         if( country.value === "BR"){
           document = CNPJ.create(data.document)
+    const cnpj = CNPJ.create(document.raw)
 
-          const companyAlreadyExist = await this.repo.findByCnpj(document.raw)
+
+          const companyAlreadyExist = await this.repo.findByCnpj(cnpj)
 
           if(companyAlreadyExist){
-            throw new Error("CNPJ already exists")
+            throw new CnpjAlreadyExist()
           }
         }
 
         if( country.value === "VE"){
           document = RIF.create(data.document)
+    const rif = RIF.create(document.raw)
 
-           const companyAlreadyExist = await this.repo.findByRif(document.raw)
+           const companyAlreadyExist = await this.repo.findByRif(rif)
 
           if(companyAlreadyExist){
-            throw new Error("RIF already exists")
+            throw new RifAlreadyExist()
           }
         }
     } 

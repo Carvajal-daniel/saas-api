@@ -1,3 +1,4 @@
+import { InvalidPhoneErros } from "../../Errors/invalid-phone.js";
 
 
 export class UserPhone {
@@ -14,7 +15,7 @@ export class UserPhone {
 
 
     if (!cleanPhone || !this.validate(cleanPhone)) {
-      throw new Error("")
+      throw new InvalidPhoneErros()
     }
 
     return new UserPhone(cleanPhone);

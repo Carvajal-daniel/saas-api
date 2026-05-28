@@ -1,3 +1,4 @@
+import { InvalidPasswordError } from "../../Errors/invalid-password.js"
 
 
 export class UserPassword {
@@ -10,14 +11,16 @@ export class UserPassword {
 
   static create(password: string): UserPassword {
 
-    if (password.length < 8) {
-      throw new Error("Muito curta")
-    }
+   if (password.length < 8) {
+  throw new InvalidPasswordError(
+    "Password must contain at least 8 characters"
+  )
+}
 
     const hasLetter = /[a-zA-Z]/.test(password)
 
     if (!hasLetter) {
-      throw new Error(
+      throw new InvalidPasswordError(
         "Password must contain letters"
       )
     }
@@ -25,10 +28,10 @@ export class UserPassword {
     const hasNumber = /\d/.test(password)
 
     if (!hasNumber) {
-      throw new Error(
-        "Password must contain numbers"
-      )
-    }
+  throw new InvalidPasswordError(
+    "Password must contain numbers"
+  )
+}
 
     const hasSpecialCharacter =
       /[!@#$%^&*(),.?":{}|<>]/.test(password)

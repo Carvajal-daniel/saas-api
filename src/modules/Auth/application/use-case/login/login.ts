@@ -4,6 +4,7 @@ import type { HashPasswordInterface } from "../../../../User/Domain/services/has
 import { UserEmail } from "../../../../User/Domain/values-objects/user-email.js";
 import { UserId } from "../../../../User/Domain/values-objects/user-id.js";
 import { UserPassword } from "../../../../User/Domain/values-objects/user-password.js";
+import { InvalidCredentialsError } from "../../../Erros/invalid-credentials.js";
 import type { JWTservice } from "../../../infrastructure/security/jwt-service.js";
 import type { LoginInputDTOtype } from "./login-dto.js";
 
@@ -25,12 +26,12 @@ export class LoginUseCase{
       const client = await this.repo.findByEmail(email)
 
       if(!client){
-        throw new Error("invalid credentials")
+        throw new InvalidCredentialsError("invalid credentials")
       }
 
       const verifierPassword = await this.passwordHash.compare(password, client.password)
       if(!verifierPassword){
-        throw new Error("invalid credentials")
+        throw new InvalidCredentialsError("invalid credentials")
       }
       const userId = UserId.create(client.id) 
      const token = await this.jwtServices.sign(userId.value)

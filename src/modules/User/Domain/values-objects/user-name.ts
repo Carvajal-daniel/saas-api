@@ -1,3 +1,4 @@
+import { InvalidNameError } from "../../Errors/invalid-name.js"
 
 
 export class UserName{
@@ -12,7 +13,7 @@ export class UserName{
   static create(name: string): UserName{
 
     if( name.length < 2 ){
-     throw new Error("Nome is must ")
+     throw new InvalidNameError()
     }
 
     return new UserName(name)

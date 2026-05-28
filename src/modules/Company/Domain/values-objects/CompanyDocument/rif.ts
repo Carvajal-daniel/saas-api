@@ -1,3 +1,5 @@
+import { InvalidRif } from "../../../Erros/invalid-rif.js"
+
 export class RIF {
   private constructor(
     private readonly value: string
@@ -10,7 +12,7 @@ export class RIF {
     .replace(/-/g, "")
 
   if (!/^[JGVE]\d{9}$/.test(clean)) {
-    throw new Error("Invalid RIF")
+    throw new InvalidRif()
   }
 
   return new RIF(clean)

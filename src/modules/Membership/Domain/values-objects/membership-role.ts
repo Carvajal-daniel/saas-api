@@ -1,3 +1,4 @@
+import { InvalidRole } from "../../Erros/invalid-role.js"
 
 
 
@@ -13,7 +14,7 @@ export class MembershipRole{
   static create(name: string): MembershipRole{
 
     if( name.length < 2 ){
-     throw new Error("role is must be")
+     throw new InvalidRole()
     }
 
     return new MembershipRole(name)

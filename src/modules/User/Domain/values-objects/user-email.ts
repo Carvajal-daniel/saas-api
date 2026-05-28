@@ -1,3 +1,4 @@
+import { InvalidEmailError } from "../../Errors/Invalid-email.js";
 
 
 export class UserEmail {
@@ -13,7 +14,7 @@ export class UserEmail {
     const emailClean = email.trim().toLocaleLowerCase();
 
     if(!emailClean || !this.validate(emailClean) ){
-      throw new Error("d")
+      throw new InvalidEmailError()
     }
     return new UserEmail(email)
   }

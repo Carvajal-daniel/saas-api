@@ -1,3 +1,5 @@
+import { InvalidCountryError } from "../../Erros/invalid-country.js";
+
 export type SupportedCountries = "BR" | "VE";
 
 export class CompanyCountry {
@@ -9,13 +11,13 @@ export class CompanyCountry {
   static create(country: string): CompanyCountry {
 
     if (!country) {
-      throw new Error("O país da empresa é obrigatório.");
+      throw new InvalidCountryError("O país da empresa é obrigatório.");
     }
 
     const upperCountry = country.toUpperCase().trim();
 
     if (upperCountry !== "BR" && upperCountry !== "VE") {
-      throw new Error(
+      throw new InvalidCountryError(
         `O país '${country}' não é suportado pelo sistema. Escolha BR ou VE.`
       );
     }

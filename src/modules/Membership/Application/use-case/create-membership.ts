@@ -4,6 +4,7 @@ import { UserId } from "../../../User/Domain/values-objects/user-id.js";
 import { MembershipEntity } from "../../Domain/entities/membership-entity.js";
 import { MembershipId } from "../../Domain/values-objects/membership-id.js";
 import { MembershipRole } from "../../Domain/values-objects/membership-role.js";
+import { MembershipAlreadyExist } from "../../Erros/membership-already-exists.js";
 import type { MembershipRepositoryDB } from "../../Infrastructure/database/repositories/membership-repository.js";
 import type { CreateMembershipInputDTOtype } from "./membership-dto.js";
 
@@ -26,7 +27,7 @@ export class CreateMembershipUseCase{
     tx
   )
     if(membershiptExists){
-      throw new Error("membership already exists")
+      throw new MembershipAlreadyExist()
     }
 
     const membership =  MembershipEntity.create({
